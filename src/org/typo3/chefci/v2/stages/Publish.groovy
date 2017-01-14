@@ -27,10 +27,10 @@ class Publish extends AbstractStage {
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
         } catch (FlowInterruptedException err) { // error means we reached timeout
-            def user = err.getCauses()[0].getUser()
+            script.echo "Causes: ${err.getCauses()}"
+            def user = err.getCauses().first.getUser()
             if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
                 didTimeout = true
-                script.echo "Input step timed out (Exception: ${err}"
             } else {
                 userInput = false
                 script.echo "Aborted by: [${user}]"
