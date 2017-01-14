@@ -34,7 +34,7 @@ class Publish extends AbstractStage {
                 didTimeout = true
             } else {
                 userInput = false
-                script.echo "Aborted by user ${rejection.getUser()}"
+                script.echo rejection.getShortDescription()
             }
         }
 
