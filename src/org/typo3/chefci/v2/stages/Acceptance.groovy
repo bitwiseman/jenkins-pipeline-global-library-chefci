@@ -21,7 +21,6 @@ class Acceptance extends AbstractStage {
             def jenkinsHelper = new JenkinsHelper(script)
             jenkinsHelper.copyGlobalLibraryScript 'cookbook/.kitchen.docker.yml', '.kitchen.docker.yml'
 
-            int result = 0
             script.wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "XTerm"]) {
                 script.withEnv(['KITCHEN_LOCAL_YAML=.kitchen.docker.yml']) {
                     try {
