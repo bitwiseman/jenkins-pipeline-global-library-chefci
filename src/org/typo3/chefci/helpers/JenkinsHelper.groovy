@@ -1,9 +1,9 @@
 package org.typo3.chefci.helpers
 
-class JenkinsGlobalLib implements Serializable {
+class JenkinsHelper implements Serializable {
     def steps
 
-    JenkinsGlobalLib(steps) { this.steps = steps }
+    JenkinsHelper(steps) { this.steps = steps }
 
     @NonCPS
     String createTempLocation(String path) {
@@ -12,13 +12,13 @@ class JenkinsGlobalLib implements Serializable {
     }
 
     // returns the path to a temp location of a script from the global library (resources/ subdirectory)
-    String globalLibraryScript(String srcPath, String destPath = null) {
+    String copyGlobalLibraryScript(String srcPath, String destPath = null) {
 
         destPath = destPath ?: createTempLocation(srcPath)
         // writeFile does not overwrite, so we delete the file first
         steps.deleteFile destPath
         steps.writeFile file: destPath, text: steps.libraryResource(srcPath)
-        steps.echo "globalLibraryScript: copied ${srcPath} to ${destPath}"
+        steps.echo "copyGlobalLibraryScript: copied ${srcPath} to ${destPath}"
         return destPath
     }
 }

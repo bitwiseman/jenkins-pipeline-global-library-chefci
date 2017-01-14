@@ -1,6 +1,6 @@
 package org.typo3.chefci.v2.stages
 
-import org.typo3.chefci.helpers.JenkinsGlobalLib
+import org.typo3.chefci.helpers.JenkinsHelper
 
 class Acceptance extends AbstractStage {
 
@@ -18,20 +18,19 @@ class Acceptance extends AbstractStage {
     private def testkitchen(){
         script.node {
 
-            def jenkinsHelper = new JenkinsGlobalLib(script)
-            jenkinsHelper.globalLibraryScript('cookbook/.kitchen.docker.yml', '.kitchen.docker.yml')
+            def jenkinsHelper = new JenkinsHelper(script)
+            jenkinsHelper.copyGlobalLibraryScript 'cookbook/.kitchen.docker.yml', '.kitchen.docker.yml'
 
             int result = 0
             script.wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "XTerm"]) {
                 script.withEnv(['KITCHEN_LOCAL_YAML=.kitchen.docker.yml']) {
-                    result = script.sh(script: 'kitchen test --destroy always', returnStatus: true)
+                    result = script.sh script: 'kitchen test --destroy always', returnStatus: true
                 }
             }
             if (result != 0) {
-                script.echo "kitchen returned non-zero exit status"
-//                echo "Archiving test-kitchen logs"
-//                archive(includes: ".kitchen/logs/${instanceName}.log")
-                script.error("kitchen returned non-zero exit status")
+                echo "Archiving test-kitchen logs due to failure condition"
+                // archive includes: ".kitchen/logs/${instanceName}.log"
+                script.error "kitchen returned non-zero exit status"
             }
         }
     }

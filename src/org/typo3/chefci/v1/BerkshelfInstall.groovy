@@ -79,7 +79,7 @@ String globalLibraryScript(String path) {
     // writeFile does not overwrite, so we delete the file first
     deleteFile(tmpPath)
     writeFile(file: tmpPath, text: libraryResource(path))
-    echo "globalLibraryScript: copied ${path} to ${tmpPath}"
+    echo "copyGlobalLibraryScript: copied ${path} to ${tmpPath}"
     return tmpPath
 }
 
