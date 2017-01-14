@@ -25,7 +25,7 @@ class Acceptance extends AbstractStage {
                 script.withEnv(['KITCHEN_LOCAL_YAML=.kitchen.docker.yml']) {
                     try {
                         script.sh script: 'kitchen test --destroy always'
-                    } catch (Exception e) {
+                    } catch (err) {
                         script.echo "Archiving test-kitchen logs due to failure condition"
                         // archive includes: ".kitchen/logs/${instanceName}.log"
                         script.error "kitchen returned non-zero exit status"
