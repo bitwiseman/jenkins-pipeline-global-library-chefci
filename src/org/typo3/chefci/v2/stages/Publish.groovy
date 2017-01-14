@@ -40,7 +40,7 @@ class Publish extends AbstractStage {
 
         script.node {
             if (didTimeout) {
-                currentBuild.displayName = "#${currentBuild.getNumber()} (no upload)"
+                script.currentBuild.displayName = "#${script.currentBuild.getNumber()} (no upload)"
                 script.echo "No cookbook upload was triggered within timeout"
             } else if (userInput == true) {
                 // TODO get rid of `bundle install`
@@ -53,9 +53,9 @@ class Publish extends AbstractStage {
                 // sh("git push origin ${newVersion}")
                 // TODO remove comment once we've finished this...
                 //script.sh("berks upload")
-                currentBuild.displayName = "#${currentBuild.getNumber()} - ${newVersion} (${versionPart})"
+                script.currentBuild.displayName = "#${script.currentBuild.getNumber()} - ${newVersion} (${versionPart})"
             } else {
-                currentBuild.displayName = "#${currentBuild.getNumber()} (no upload)"
+                script.currentBuild.displayName = "#${script.currentBuild.getNumber()} (no upload)"
                 script.echo "No cookbook upload was triggered within timeout"
             }
         }
