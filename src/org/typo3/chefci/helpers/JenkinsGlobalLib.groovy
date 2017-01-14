@@ -14,11 +14,11 @@ class JenkinsGlobalLib {
     // returns the path to a temp location of a script from the global library (resources/ subdirectory)
     String globalLibraryScript(String srcPath, String destPath = null) {
 
-//        destPath = destPath ?: createTempLocation(srcPath)
-//        // writeFile does not overwrite, so we delete the file first
-//        steps.deleteFile destPath
-//        steps.writeFile file: destPath, text: libraryResource(path)
-//        steps.echo "globalLibraryScript: copied ${path} to ${destPath}"
-//        return destPath
+        destPath = destPath ?: createTempLocation(srcPath)
+        // writeFile does not overwrite, so we delete the file first
+        steps.deleteFile destPath
+        steps.writeFile file: destPath, text: libraryResource(path)
+        steps.echo "globalLibraryScript: copied ${path} to ${destPath}"
+        return destPath
     }
 }

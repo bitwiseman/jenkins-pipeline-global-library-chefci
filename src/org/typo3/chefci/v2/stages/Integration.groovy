@@ -18,8 +18,8 @@ class Integration extends AbstractStage {
     private def testkitchen(){
         script.node {
 
-//            def jenkinsHelper = new JenkinsGlobalLib(script)
-//            String kitchenYaml = jenkinsHelper.globalLibraryScript('cookbook/.kitchen.docker.yml', '.kitchen.docker.yml')
+            def jenkinsHelper = new JenkinsGlobalLib(script)
+            jenkinsHelper.globalLibraryScript('cookbook/.kitchen.docker.yml', '.kitchen.docker.yml')
 
             script.wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "XTerm"]) {
                 int result = script.sh(script: 'kitchen test --destroy always', returnStatus: true)
