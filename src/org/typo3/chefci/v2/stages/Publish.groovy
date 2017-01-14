@@ -2,7 +2,7 @@ package org.typo3.chefci.v2.stages
 
 import hudson.model.ChoiceParameterDefinition
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
-import org.jenkinsci.plugins.workflow.support.steps.input;
+import org.jenkinsci.plugins.workflow.support.steps.input.Rejection
 
 class Publish extends AbstractStage {
 
