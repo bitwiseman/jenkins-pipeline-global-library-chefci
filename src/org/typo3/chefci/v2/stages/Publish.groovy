@@ -35,7 +35,7 @@ class Publish extends AbstractStage {
             }
         }
 
-        node {
+        script.node {
             if (didTimeout) {
                 currentBuild.displayName = "#${currentBuild.getNumber()} (no upload)"
                 script.echo "No cookbook upload was triggered within timeout"
