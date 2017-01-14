@@ -1,9 +1,10 @@
 package org.typo3.chefci.v2
 
+import org.typo3.chefci.v2.stages.Build
 import org.typo3.chefci.v2.stages.GitCheckout
 import org.typo3.chefci.v2.stages.HelloWorld
-import org.typo3.chefci.v2.stages.Lint
 import org.typo3.chefci.v2.stages.Integration
+import org.typo3.chefci.v2.stages.Lint
 import org.typo3.chefci.v2.stages.Stage
 
 class Pipeline implements Serializable {
