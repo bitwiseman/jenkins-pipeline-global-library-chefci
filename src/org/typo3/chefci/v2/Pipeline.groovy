@@ -46,6 +46,11 @@ class Pipeline implements Serializable {
             return this
         }
 
+        def withBuildStage() {
+            stages << new Build(script, 'Build')
+            return this
+        }
+
         def withIntegrationStage() {
             stages << new Integration(script, 'Integration')
             return this
