@@ -16,7 +16,7 @@ class Publish extends AbstractStage {
             bumpVersion()
         }
     }
-    private def bumpVersion() {
+    private bumpVersion() {
         def userInput = true
         def didTimeout = false
         def versionPart
