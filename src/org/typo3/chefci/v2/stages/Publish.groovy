@@ -17,15 +17,17 @@ class Publish extends AbstractStage {
     private def bumpVersion() {
         def userInput = true
         def didTimeout = false
+        def versionPart
 
         // see https://go.cloudbees.com/docs/support-kb-articles/CloudBees-Jenkins-Enterprise/Pipeline---How-to-add-an-input-step,-with-timeout,-that-continues-if-timeout-is-reached,-using-a-default-value.html
         try {
             script.timeout(time: 15, unit: 'SECONDS') {
-                choice = new ChoiceParameterDefinition('Version Part:', ['patch', 'minor', 'major'] as String[], '')
+                def choice = new ChoiceParameterDefinition('Version Part:', ['patch', 'minor', 'major'] as String[], '')
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
+        } catch (MissingPropertyException err) {
+            script.error "Exception: ${err}"
         } catch (err) { // error means we reached timeout
-            script.error err
             def user = err.getCauses()[0].getUser()
             if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
                 didTimeout = true
