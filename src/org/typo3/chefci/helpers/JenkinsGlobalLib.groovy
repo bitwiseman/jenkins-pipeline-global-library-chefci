@@ -1,6 +1,6 @@
 package org.typo3.chefci.helpers
 
-class JenkinsGlobalLib {
+class JenkinsGlobalLib implements Serializable {
     def steps
 
     JenkinsGlobalLib(steps) { this.steps = steps }
