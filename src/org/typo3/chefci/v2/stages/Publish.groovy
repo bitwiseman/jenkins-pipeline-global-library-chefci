@@ -2,6 +2,7 @@ package org.typo3.chefci.v2.stages
 
 import hudson.model.ChoiceParameterDefinition
 import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
+import org.jenkinsci.plugins.workflow.support.steps.input;
 
 class Publish extends AbstractStage {
 
@@ -27,13 +28,13 @@ class Publish extends AbstractStage {
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
         } catch (FlowInterruptedException err) { // error means we reached timeout
-            script.echo "Causes: ${err.getCauses()}"
-            def user = err.getCauses().first.getUser()
-            if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
+            // err.getCauses() returns [org.jenkinsci.plugins.workflow.support.steps.input.Rejection]
+            Rejection rejection = err.getCauses().first()
+            if ('SYSTEM' == rejection.getUser().toString()) { // user == SYSTEM means timeout.
                 didTimeout = true
             } else {
                 userInput = false
-                script.echo "Aborted by: [${user}]"
+                script.echo rejection.getShortDescription()
             }
         }
 
