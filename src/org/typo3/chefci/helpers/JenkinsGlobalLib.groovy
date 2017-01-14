@@ -17,7 +17,7 @@ class JenkinsGlobalLib implements Serializable {
         destPath = destPath ?: createTempLocation(srcPath)
         // writeFile does not overwrite, so we delete the file first
         steps.deleteFile destPath
-        steps.writeFile file: destPath, text: libraryResource(srcPath)
+        steps.writeFile file: destPath, text: steps.libraryResource(srcPath)
         steps.echo "globalLibraryScript: copied ${srcPath} to ${destPath}"
         return destPath
     }
