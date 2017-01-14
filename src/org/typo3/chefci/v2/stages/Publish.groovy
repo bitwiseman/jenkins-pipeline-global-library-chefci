@@ -27,13 +27,13 @@ class Publish extends AbstractStage {
             }
         } catch (err) { // error means we reached timeout
             println "Exception ${err}"
-            def user = err.getCauses()[0].getUser()
-            if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
-                didTimeout = true
-            } else {
-                userInput = false
-                echo "Aborted by: [${user}]"
-            }
+//            def user = err.getCauses()[0].getUser()
+//            if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
+//                didTimeout = true
+//            } else {
+//                userInput = false
+//                echo "Aborted by: [${user}]"
+//            }
         }
 
         script.node {
