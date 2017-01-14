@@ -1,6 +1,7 @@
 package org.typo3.chefci.v2.stages
 
 import hudson.model.ChoiceParameterDefinition
+import org.jenkinsci.plugins.workflow.steps.FlowInterruptedException
 
 class Publish extends AbstractStage {
 
@@ -25,7 +26,7 @@ class Publish extends AbstractStage {
                 def choice = new ChoiceParameterDefinition('Version Part:', ['patch', 'minor', 'major'] as String[], '')
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
-        } catch (err) { // error means we reached timeout
+        } catch (FlowInterruptedException err) { // error means we reached timeout
             def user = err.getCauses()[0].getUser()
             if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
                 didTimeout = true
