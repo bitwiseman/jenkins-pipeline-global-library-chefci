@@ -26,6 +26,7 @@ class Publish extends AbstractStage {
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
         } catch (err) { // error means we reached timeout
+            println "Exception ${err}"
             def user = err.getCauses()[0].getUser()
             if ('SYSTEM' == user.toString()) { // user == SYSTEM means timeout.
                 didTimeout = true
