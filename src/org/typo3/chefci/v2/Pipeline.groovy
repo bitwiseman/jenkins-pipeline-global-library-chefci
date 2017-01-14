@@ -53,7 +53,7 @@ class Pipeline implements Serializable {
         }
 
         def withIntegrationStage() {
-            stages << new Integration(script, 'Integration')
+            stages << new Acceptance(script, 'Acceptance')
             return this
         }
 

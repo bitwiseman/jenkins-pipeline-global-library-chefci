@@ -2,9 +2,9 @@ package org.typo3.chefci.v2.stages
 
 import org.typo3.chefci.helpers.JenkinsGlobalLib
 
-class Integration extends AbstractStage {
+class Acceptance extends AbstractStage {
 
-    Integration(Object script, String stageName) {
+    Acceptance(Object script, String stageName) {
         super(script, stageName)
     }
 
