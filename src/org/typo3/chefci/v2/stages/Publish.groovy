@@ -1,6 +1,6 @@
 package org.typo3.chefci.v2.stages
 
-import org.typo3.chefci.helpers.JenkinsHelper
+import hudson.model.ChoiceParameterDefinition
 
 class Publish extends AbstractStage {
 
@@ -14,14 +14,13 @@ class Publish extends AbstractStage {
             bumpVersion()
         }
     }
-
-    private def bumpVersion(){
+    private def bumpVersion {
         def userInput = true
         def didTimeout = false
 
         // see https://go.cloudbees.com/docs/support-kb-articles/CloudBees-Jenkins-Enterprise/Pipeline---How-to-add-an-input-step,-with-timeout,-that-continues-if-timeout-is-reached,-using-a-default-value.html
         try {
-            timeout(time: 15, unit: 'MINUTES') {
+            script.timeout(time: 15, unit: 'SECONDS') {
                 choice = new ChoiceParameterDefinition('Version Part:', ['patch', 'minor', 'major'] as String[], '')
                 versionPart = script.input message: 'Bump major, minor or patch version?', parameters: [choice]
             }
