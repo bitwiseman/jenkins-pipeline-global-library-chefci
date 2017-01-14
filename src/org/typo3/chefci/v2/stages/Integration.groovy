@@ -23,7 +23,7 @@ class Integration extends AbstractStage {
 
             int result = 0
             script.wrap([$class: 'AnsiColorBuildWrapper', colorMapName: "XTerm"]) {
-                script.withEnv('KITCHEN_LOCAL_YAML=.kitchen.docker.yml') {
+                script.withEnv(['KITCHEN_LOCAL_YAML=.kitchen.docker.yml']) {
                     result = script.sh(script: 'kitchen test --destroy always', returnStatus: true)
                 }
             }
