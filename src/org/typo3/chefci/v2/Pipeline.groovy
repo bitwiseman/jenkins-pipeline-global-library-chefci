@@ -64,6 +64,7 @@ class Pipeline implements Serializable {
         def buildDefaultPipeline() {
             withGitCheckoutStage()
             withLintStage()
+            withBuildStage()
             withIntegrationStage()
             return new Pipeline(this)
         }
