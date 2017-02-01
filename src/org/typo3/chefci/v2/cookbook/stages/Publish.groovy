@@ -120,18 +120,22 @@ class Publish extends AbstractStage {
         script.sh "chef exec thor version:bump ${level}"
         def newVersion = script.readFile('VERSION')
 
-        // TODO
+        // we assume that such credentials exist
         def credentialsId = 'github-token'
-        script.withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: credentialsId, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-            // this was the coolest way to not store the password that I found
-            // http://stackoverflow.com/questions/33570075/tag-a-repo-from-a-jenkins-workflow-script
-            // (there is a warning "warning: invalid credential line: get", but doesn't matter)
-            // yes, using HTTPS, because we have an API token already!
-            script.sh("git config credential.username ${script.env.GIT_USERNAME}")
-            script.sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
-            script.sh("GIT_ASKPASS=true git push origin ${newVersion}")
+        try {
+            script.withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: credentialsId, usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                // this was the coolest way to not store the password that I found
+                // http://stackoverflow.com/questions/33570075/tag-a-repo-from-a-jenkins-workflow-script
+                // (there is a warning "warning: invalid credential line: get", but doesn't matter)
+                // yes, using HTTPS, because we have an API token already!
+                script.sh("git config credential.username ${script.env.GIT_USERNAME}")
+                script.sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
+                script.sh("GIT_ASKPASS=true git push origin ${newVersion}")
+            }
+        } catch (err) {
+            err.printStackTrace()
+            script.error "withCredentials did not work"
         }
-
         newVersion
     }
 
