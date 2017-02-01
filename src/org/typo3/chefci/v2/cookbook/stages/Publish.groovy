@@ -1,6 +1,7 @@
 package org.typo3.chefci.v2.cookbook.stages
 
 import hudson.model.ChoiceParameterDefinition
+import org.jenkinsci.plugins.credentialsbinding.impl.CredentialNotFoundException
 import org.typo3.chefci.helpers.JenkinsHelper
 import org.typo3.chefci.helpers.Slack
 import org.typo3.chefci.v2.shared.stages.AbstractStage
@@ -132,8 +133,8 @@ class Publish extends AbstractStage {
                 script.sh("git config credential.helper '!echo password=\$GIT_PASSWORD; echo'")
                 script.sh("GIT_ASKPASS=true git push origin ${newVersion}")
             }
-        } catch (err) {
-            script.error "withCredentials did not work: ${err.getMessage()}"
+        } catch (CredentialNotFoundException e) {
+            script.error "Credential entry not found: ${e.getMessage()}"
         }
         newVersion
     }
