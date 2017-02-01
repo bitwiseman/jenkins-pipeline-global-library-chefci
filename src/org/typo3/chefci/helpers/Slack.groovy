@@ -15,9 +15,14 @@ class Slack implements Serializable {
     }
 
     def send(Map args) {
-        script.slackSend(
-                args + [failOnError: false]
-        )
+        try {
+            script.slackSend(
+                    args + [failOnError: false]
+            )
+        } catch (err) {
+            script.echo "Catched the slack exception."
+            err.printStackTrace()
+        }
     }
 
     def buildStart() {
