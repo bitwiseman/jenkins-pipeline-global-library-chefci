@@ -133,7 +133,7 @@ class Publish extends AbstractStage {
                 script.sh("GIT_ASKPASS=true git push origin ${newVersion}")
             }
         } catch (err) {
-            err.printStackTrace()
+            err.getMessage()
             script.error "withCredentials did not work"
         }
         newVersion
