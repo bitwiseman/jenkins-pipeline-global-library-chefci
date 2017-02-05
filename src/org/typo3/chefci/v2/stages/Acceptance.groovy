@@ -19,10 +19,10 @@ class Acceptance extends AbstractStage {
         }
     }
 
-    void setKitchenLocalYmlName(String filename) {
-        kitchenLocalYmlName = filename
-        this
-    }
+//    void setKitchenLocalYmlName(String filename) {
+//        kitchenLocalYmlName = filename
+//        this
+//    }
 
     private testkitchen() {
         script.node {
